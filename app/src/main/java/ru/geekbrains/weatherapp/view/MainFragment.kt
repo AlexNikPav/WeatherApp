@@ -41,21 +41,19 @@ class MainFragment : Fragment() {
     }
 
     private fun renderData(appState: AppState) {
-        val loadingLayout = binding.loadingLayout
-        val mainView = binding.mainView
         when (appState) {
             is AppState.Success -> {
                 val weatherData = appState.weatherData
-                loadingLayout.visibility = View.GONE
+                binding.loadingLayout.visibility = View.GONE
                 setData(weatherData)
             }
             is AppState.Loading -> {
-                loadingLayout.visibility = View.VISIBLE
+                binding.loadingLayout.visibility = View.VISIBLE
             }
             is AppState.Error -> {
-                loadingLayout.visibility = View.GONE
+                binding.loadingLayout.visibility = View.GONE
                 Snackbar
-                    .make(mainView, "Error", Snackbar.LENGTH_INDEFINITE)
+                    .make(binding.mainView, "Error", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Reload") { viewModel.getWeatherFromLocalSource() }
                     .show()
             }
@@ -63,7 +61,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setData(weatherData: Weather) {
-        binding.cityName.text = weatherData.city.city
+        binding.cityName.text = weatherData.city.name
         binding.cityCoordinates.text = String.format(
             getString(R.string.city_coordinates),
             weatherData.city.lat.toString(),
