@@ -1,7 +1,8 @@
-package ru.geekbrains.weatherapp
+package ru.geekbrains.weatherapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.geekbrains.weatherapp.R
 
 class MainActivity : AppCompatActivity() {
 
