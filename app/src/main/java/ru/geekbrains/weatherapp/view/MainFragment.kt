@@ -54,7 +54,9 @@ class MainFragment : Fragment() {
                 binding.loadingLayout.visibility = View.GONE
                 Snackbar
                     .make(binding.mainView, "Error", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Reload") { viewModel.getWeatherFromLocalSource() }
+                    .setAction("Reload") {
+                        viewModel.getWeatherFromLocalSource()
+                    }
                     .show()
             }
         }
