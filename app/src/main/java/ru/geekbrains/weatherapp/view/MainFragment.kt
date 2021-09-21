@@ -27,7 +27,7 @@ class MainFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, weather)
                 manager.beginTransaction()
-                    .add(R.id.container, DetailsFragment.newInstance(bundle))
+                    .replace(R.id.container, DetailsFragment.newInstance(bundle))
                     .addToBackStack("")
                     .commitAllowingStateLoss()
             }
