@@ -25,7 +25,7 @@ class MainViewModel(
             Thread.sleep(1000)
 
             val appState: AppState
-            if (Math.random() < 0.5) {
+            if ((0..9).random() < 5) {
                 appState = AppState.Success(repositoryImpl.getWeatherFromLocalStorage())
             } else {
                 appState = AppState.Error(Exception("Что-то пошло не так"))
