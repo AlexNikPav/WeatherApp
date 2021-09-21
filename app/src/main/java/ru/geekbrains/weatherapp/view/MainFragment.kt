@@ -1,8 +1,6 @@
 package ru.geekbrains.weatherapp.view
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,13 +38,11 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("MyLogs", "onCreateView")
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.getRoot()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d("MyLogs", "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         binding.mainFragmentRecyclerView.adapter = adapter
         binding.mainFragmentFAB.setOnClickListener { changeWeatherDataSet() }
