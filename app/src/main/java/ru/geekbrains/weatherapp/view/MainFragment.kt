@@ -1,6 +1,8 @@
 package ru.geekbrains.weatherapp.view
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +20,8 @@ class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var viewModel: MainViewModel
+    private var isDataSetRus: Boolean = true
     private val adapter = MainFragmentAdapter(object : OnItemViewClickListener {
         override fun onItemViewClick(weather: Weather) {
             val manager = activity?.supportFragmentManager
@@ -33,17 +35,18 @@ class MainFragment : Fragment() {
             }
         }
     })
-    private var isDataSetRus: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("MyLogs", "onCreateView")
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.getRoot()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d("MyLogs", "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         binding.mainFragmentRecyclerView.adapter = adapter
         binding.mainFragmentFAB.setOnClickListener { changeWeatherDataSet() }
@@ -86,6 +89,11 @@ class MainFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onDestroy() {
         adapter.removeListener()
         super.onDestroy()
@@ -95,7 +103,6 @@ class MainFragment : Fragment() {
         fun newInstance() =
             MainFragment()
     }
-
 
     interface OnItemViewClickListener {
         fun onItemViewClick(weather: Weather)

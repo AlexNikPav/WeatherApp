@@ -38,6 +38,11 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     companion object {
 
         const val BUNDLE_EXTRA = "weather"
