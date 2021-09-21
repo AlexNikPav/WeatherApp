@@ -1,11 +1,9 @@
 package ru.geekbrains.weatherapp.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.geekbrains.weatherapp.models.Repository
 import ru.geekbrains.weatherapp.models.RepositoryImpl
-import java.lang.Exception
 
 class MainViewModel(
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
@@ -15,23 +13,24 @@ class MainViewModel(
 
     fun getLiveData() = liveDataToObserve
 
-    fun getWeatherFromLocalSource() = getDataFromLocalSource()
+    fun getWeatherFromLocalSourceRus() = getDataFromLocalSource(isRussian = true)
 
-    fun getWeatherFromRemoteSource() = getDataFromLocalSource()
+    fun getWeatherFromLocalSourceWorld() = getDataFromLocalSource(isRussian = false)
 
-    private fun getDataFromLocalSource() {
+    fun getWeatherFromRemoteSource() = getDataFromLocalSource(isRussian = true)
+
+    private fun getDataFromLocalSource(isRussian: Boolean) {
         liveDataToObserve.value = AppState.Loading
         Thread {
             Thread.sleep(1000)
-
-            val appState: AppState
-            if ((0..9).random() < 5) {
-                appState = AppState.Success(repositoryImpl.getWeatherFromLocalStorage())
-            } else {
-                appState = AppState.Error(Exception("Что-то пошло не так"))
-            }
-
-            liveDataToObserve.postValue(appState)
+            liveDataToObserve.postValue(
+                AppState.Success(
+                    if (isRussian)
+                        repositoryImpl.getWeatherFromLocalStorageRus()
+                    else
+                        repositoryImpl.getWeatherFromLocalStorageWorld()
+                )
+            )
         }.start()
     }
 }
