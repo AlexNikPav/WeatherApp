@@ -47,13 +47,7 @@ class DetailsFragment : Fragment() {
     }
 
     companion object {
-
         const val BUNDLE_EXTRA = "weather"
-
-        fun newInstance(bundle: Bundle): DetailsFragment {
-            val fragment = DetailsFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
+        fun newInstance(bundle: Bundle) = DetailsFragment().apply { arguments = bundle }
     }
 }
