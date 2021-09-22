@@ -85,12 +85,10 @@ class MainFragment : Fragment() {
     }
 
     private fun View.showSnackBar(
-        text: String,
-        actionText: String,
-        action: (View) -> Unit,
+        resId: Int,
         length: Int = Snackbar.LENGTH_INDEFINITE
     ) {
-        Snackbar.make(this, text, length).setAction(actionText, action).show()
+        Snackbar.make(this, getString(resId), length).show()
     }
 
     override fun onDestroyView() {
@@ -111,4 +109,13 @@ class MainFragment : Fragment() {
     interface OnItemViewClickListener {
         fun onItemViewClick(weather: Weather)
     }
+}
+
+fun View.showSnackBar(
+    text: String,
+    actionText: String,
+    action: (View) -> Unit,
+    length: Int = Snackbar.LENGTH_INDEFINITE
+) {
+    Snackbar.make(this, text, length).setAction(actionText, action).show()
 }

@@ -39,7 +39,6 @@ class DetailsFragment : Fragment() {
                 }
             }
         }
-
     }
 
     override fun onDestroyView() {
