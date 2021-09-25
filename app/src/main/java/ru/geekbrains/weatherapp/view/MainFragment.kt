@@ -119,3 +119,10 @@ fun View.showSnackBar(
 ) {
     Snackbar.make(this, text, length).setAction(actionText, action).show()
 }
+
+fun View.showSnackBar(
+    text: String,
+    length: Int = Snackbar.LENGTH_INDEFINITE
+) {
+    Snackbar.make(this, text, length).show()
+}

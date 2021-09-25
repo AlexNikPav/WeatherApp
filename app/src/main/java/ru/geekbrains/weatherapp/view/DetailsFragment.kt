@@ -24,7 +24,7 @@ class DetailsFragment : Fragment() {
             }
 
             override fun onFailed(throwable: Throwable) {
-                //Обработка ошибки
+                binding.root.showSnackBar(throwable.message.toString())
             }
         }
 

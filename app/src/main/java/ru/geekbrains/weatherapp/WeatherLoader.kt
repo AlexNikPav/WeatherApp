@@ -38,7 +38,6 @@ class WeatherLoader(
                     val bufferedReader =
                         BufferedReader(InputStreamReader(urlConnection.inputStream))
 
-                    // преобразование ответа от сервера (JSON) в модель данных (WeatherDTO)
                     val weatherDTO: WeatherDTO =
                         Gson().fromJson(getLines(bufferedReader), WeatherDTO::class.java)
                     handler.post { listener.onLoaded(weatherDTO) }
@@ -56,7 +55,6 @@ class WeatherLoader(
             listener.onFailed(e)
         }
     }
-
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getLines(reader: BufferedReader): String {
