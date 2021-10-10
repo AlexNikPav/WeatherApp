@@ -1,4 +1,4 @@
-package ru.geekbrains.weatherapp
+package ru.geekbrains.weatherapp.receivers
 
 import android.content.BroadcastReceiver
 import android.content.Context

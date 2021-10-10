@@ -1,10 +1,11 @@
-package ru.geekbrains.weatherapp
+package ru.geekbrains.weatherapp.classes
 
 import android.os.Build
 import android.os.Handler
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
+import ru.geekbrains.weatherapp.BuildConfig
 import ru.geekbrains.weatherapp.models.WeatherDTO
 import java.io.BufferedReader
 import java.io.InputStreamReader

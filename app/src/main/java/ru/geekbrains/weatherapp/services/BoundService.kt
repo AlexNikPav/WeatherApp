@@ -1,4 +1,4 @@
-package ru.geekbrains.weatherapp
+package ru.geekbrains.weatherapp.services
 
 import android.app.Service
 import android.content.Intent

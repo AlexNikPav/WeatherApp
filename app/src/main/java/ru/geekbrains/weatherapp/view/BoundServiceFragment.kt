@@ -10,7 +10,7 @@ import android.content.ComponentName
 import android.os.IBinder
 import android.content.ServiceConnection
 import android.content.Context.BIND_AUTO_CREATE
-import ru.geekbrains.weatherapp.BoundService
+import ru.geekbrains.weatherapp.services.BoundService
 import android.content.Intent
 import android.widget.Button
 import ru.geekbrains.weatherapp.R

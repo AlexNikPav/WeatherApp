@@ -1,4 +1,4 @@
-package ru.geekbrains.weatherapp
+package ru.geekbrains.weatherapp.services
 
 import android.app.IntentService
 import android.content.Intent
@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.Gson
+import ru.geekbrains.weatherapp.BuildConfig
 import ru.geekbrains.weatherapp.models.WeatherDTO
 import ru.geekbrains.weatherapp.view.*
 import java.io.BufferedReader

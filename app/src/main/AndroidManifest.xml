@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherApp">
         <service
-            android:name=".BoundService"
+            android:name=".services.BoundService"
             android:enabled="true"
             android:exported="false"></service>
 
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".DetailsService" />
+        <service android:name=".services.DetailsService" />
     </application>
 
 </manifest>
