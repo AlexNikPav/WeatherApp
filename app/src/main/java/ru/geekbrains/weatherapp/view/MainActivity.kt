@@ -3,6 +3,9 @@ package ru.geekbrains.weatherapp.view
 import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import ru.geekbrains.weatherapp.MyReceiver
 import ru.geekbrains.weatherapp.R
 import ru.geekbrains.weatherapp.databinding.MainActivityBinding
@@ -27,5 +30,25 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(myReceiver)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_bound -> {
+                val fLast = supportFragmentManager.fragments.last()
+                if (fLast !is BoundServiceFragment) {
+                    supportFragmentManager.beginTransaction()
+                        .add(R.id.container, BoundServiceFragment.newInstance())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
