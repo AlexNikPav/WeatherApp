@@ -1,7 +1,11 @@
 package ru.geekbrains.weatherapp.repository
 
-import okhttp3.Callback
+import ru.geekbrains.weatherapp.models.WeatherDTO
 
 interface DetailsRepository {
-    fun getWeatherDetailsFromServer(requestLink: String, callback: Callback)
+    fun getWeatherDetailsFromServer(
+        lat: Double,
+        lon: Double,
+        callback: retrofit2.Callback<WeatherDTO>
+    )
 }
