@@ -1,14 +1,20 @@
 package ru.geekbrains.weatherapp.view
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import coil.ImageLoader
+import coil.api.load
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import ru.geekbrains.weatherapp.*
 import ru.geekbrains.weatherapp.databinding.FragmentDetailsBinding
 import ru.geekbrains.weatherapp.models.Weather
+import ru.geekbrains.weatherapp.utils.loadSvgYa
 import ru.geekbrains.weatherapp.viewmodel.AppState
 import ru.geekbrains.weatherapp.viewmodel.DetailsViewModel
 
@@ -101,6 +107,11 @@ class DetailsFragment : Fragment() {
         binding.temperatureValue.text = weather.temperature.toString()
         binding.feelsLikeValue.text = weather.feelsLike.toString()
         binding.weatherCondition.text = weather.condition
+
+        weather.icon?.let { icon ->
+            binding.weatherIcon.loadSvgYa(icon)
+        }
+
     }
 
     override fun onDestroyView() {
