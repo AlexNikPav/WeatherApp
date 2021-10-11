@@ -49,7 +49,7 @@ class DetailsViewModel(
             return if (fact == null || fact.temp == null || fact.feels_like == null || fact.condition.isNullOrEmpty()) {
                 AppState.Error(Throwable(CORRUPTED_DATA))
             } else {
-                AppState.Success(convertDtoToModel(serverResponse))
+                AppState.SuccessOne(convertDtoToModel(serverResponse))
             }
         }
     }

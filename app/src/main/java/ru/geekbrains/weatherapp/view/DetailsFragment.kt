@@ -71,10 +71,10 @@ class DetailsFragment : Fragment() {
 
     private fun renderData(appState: AppState) {
         when (appState) {
-            is AppState.Success -> {
+            is AppState.SuccessOne -> {
                 binding.mainView.visibility = View.VISIBLE
                 binding.loadingLayout.visibility = View.GONE
-                setWeather(appState.weatherData[0])
+                setWeather(appState.weatherData)
             }
             is AppState.Loading -> {
                 binding.mainView.visibility = View.GONE
