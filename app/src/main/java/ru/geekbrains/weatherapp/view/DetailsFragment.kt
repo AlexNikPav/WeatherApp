@@ -13,6 +13,7 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import ru.geekbrains.weatherapp.*
 import ru.geekbrains.weatherapp.databinding.FragmentDetailsBinding
+import ru.geekbrains.weatherapp.models.City
 import ru.geekbrains.weatherapp.models.Weather
 import ru.geekbrains.weatherapp.utils.loadSvgYa
 import ru.geekbrains.weatherapp.viewmodel.AppState
@@ -73,16 +74,16 @@ class DetailsFragment : Fragment() {
         when (appState) {
             is AppState.SuccessOne -> {
                 binding.mainView.visibility = View.VISIBLE
-                binding.loadingLayout.visibility = View.GONE
+                binding.includedLoadingLayout.loadingLayout.visibility = View.GONE
                 setWeather(appState.weatherData)
             }
             is AppState.Loading -> {
                 binding.mainView.visibility = View.GONE
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
             }
             is AppState.Error -> {
                 binding.mainView.visibility = View.VISIBLE
-                binding.loadingLayout.visibility = View.GONE
+                binding.includedLoadingLayout.loadingLayout.visibility = View.GONE
                 binding.mainView.showSnackBar(
                     appState.error.message.toString(),
                     getString(R.string.snackbar_action_reload),
@@ -98,6 +99,7 @@ class DetailsFragment : Fragment() {
 
     private fun setWeather(weather: Weather) {
         val city = weatherBundle.city
+        saveCity(city, weather)
         binding.cityName.text = city.name
         binding.cityCoordinates.text = String.format(
             getString(R.string.city_coordinates),
@@ -112,6 +114,21 @@ class DetailsFragment : Fragment() {
             binding.weatherIcon.loadSvgYa(icon)
         }
 
+    }
+
+
+    private fun saveCity(
+        city: City,
+        weather: Weather
+    ) {
+        viewModel.saveCityToDB(
+            Weather(
+                city,
+                weather.temperature,
+                weather.feelsLike,
+                weather.condition
+            )
+        )
     }
 
     override fun onDestroyView() {
