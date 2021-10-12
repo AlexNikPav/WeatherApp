@@ -28,7 +28,6 @@ class App : Application() {
                             HistoryDataBase::class.java,
                             DB_NAME
                         )
-                            .allowMainThreadQueries()
                             .build()
                     }
                 }

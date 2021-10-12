@@ -28,7 +28,9 @@ class DetailsViewModel(
     }
 
     fun saveCityToDB(weather: Weather) {
-        historyRepository.saveEntity(weather)
+        Thread {
+            historyRepository.saveEntity(weather)
+        }.start()
     }
 
     private val callBack = object :
