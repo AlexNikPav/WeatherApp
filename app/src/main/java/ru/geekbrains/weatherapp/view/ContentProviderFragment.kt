@@ -16,8 +16,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ru.geekbrains.weatherapp.R
 import ru.geekbrains.weatherapp.databinding.FragmentContentProviderBinding
+import ru.geekbrains.weatherapp.models.Contact
+import android.R.id
+import android.content.Intent
+import android.net.Uri
 
-const val REQUEST_CODE = 42
+
+const val REQUEST_CODE = 1
+const val REQUEST_CODE_CALL_PHONE = 2
 
 class ContentProviderFragment : Fragment() {
 
@@ -100,16 +106,16 @@ class ContentProviderFragment : Fragment() {
                 }
                 return
             }
+            REQUEST_CODE_CALL_PHONE -> {
+            }
         }
     }
 
     private fun getContacts() {
         context?.let {
-            // Получаем ContentResolver у контекста
             val contentResolver: ContentResolver = it.contentResolver
-            // Отправляем запрос на получение контактов и получаем ответ в виде Cursor
             val cursorWithContacts: Cursor? = contentResolver.query(
-                ContactsContract.Contacts.CONTENT_URI,
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 null,
                 null,
                 null,
@@ -118,12 +124,16 @@ class ContentProviderFragment : Fragment() {
 
             cursorWithContacts?.let { cursor ->
                 for (i in 0..cursor.count) {
-                    // Переходим на позицию в Cursor
                     if (cursor.moveToPosition(i)) {
-                        // Берём из Cursor столбец с именем
-                        val name =
-                            cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
-                        addView(it, name)
+                        cursor?.apply {
+                            addView(
+                                it, Contact(
+                                    getString(getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID)),
+                                    getString(getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)),
+                                    getString(getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                                )
+                            )
+                        }
                     }
                 }
             }
@@ -132,9 +142,31 @@ class ContentProviderFragment : Fragment() {
 
     }
 
-    private fun addView(context: Context, textToShow: String) {
+    private fun addView(context: Context, contact: Contact) {
         binding.containerForContacts.addView(AppCompatTextView(context).apply {
-            text = textToShow
+            text = contact.name
+        })
+        binding.containerForContacts.addView(AppCompatTextView(context).apply {
+            text = contact.phone
+            setOnClickListener {
+                if (ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.CALL_PHONE
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    requireActivity().startActivity(
+                        Intent(
+                            Intent.ACTION_CALL,
+                            Uri.parse("tel:" + contact.phone)
+                        )
+                    )
+                } else {
+                    requestPermissions(
+                        arrayOf(Manifest.permission.CALL_PHONE),
+                        REQUEST_CODE_CALL_PHONE
+                    )
+                }
+            }
         })
     }
 
