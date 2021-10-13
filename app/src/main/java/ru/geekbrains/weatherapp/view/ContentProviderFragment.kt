@@ -18,6 +18,7 @@ import ru.geekbrains.weatherapp.R
 import ru.geekbrains.weatherapp.databinding.FragmentContentProviderBinding
 import ru.geekbrains.weatherapp.models.Contact
 import android.R.id
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 
@@ -111,6 +112,7 @@ class ContentProviderFragment : Fragment() {
         }
     }
 
+    @SuppressLint("Range")
     private fun getContacts() {
         context?.let {
             val contentResolver: ContentResolver = it.contentResolver
