@@ -42,6 +42,15 @@ class MainActivity : AppCompatActivity() {
                         .commitAllowingStateLoss()
                 }
             }
+            R.id.menu_content_provider -> {
+                supportFragmentManager.apply {
+                    beginTransaction()
+                        .add(R.id.container, ContentProviderFragment.newInstance())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+                true
+            }
             R.id.menu_history -> {
                 supportFragmentManager.apply {
                     beginTransaction()
