@@ -42,6 +42,15 @@ class MainActivity : AppCompatActivity() {
                         .commitAllowingStateLoss()
                 }
             }
+            R.id.menu_map -> {
+                val fLast = supportFragmentManager.fragments.last()
+                if (fLast !is GoogleMapsFragment) {
+                    supportFragmentManager.beginTransaction()
+                        .add(R.id.container, GoogleMapsFragment.newInstance())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+            }
             R.id.menu_content_provider -> {
                 supportFragmentManager.apply {
                     beginTransaction()

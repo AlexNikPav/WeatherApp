@@ -14,4 +14,8 @@
         android:id="@+id/menu_history"
         android:title="@string/menu_title_history"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_map"
+        android:title="@string/menu_map"
+        app:showAsAction="ifRoom" />
 </menu>
