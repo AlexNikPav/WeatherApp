@@ -22,7 +22,7 @@ class RemoteDataSource {
                 GsonBuilder().setLenient().create()
             )
         )
-        .client(createOkHttpClient(WeatherApiInterceptor()))
+//        .client(createOkHttpClient(WeatherApiInterceptor()))
         .build().create(WeatherAPI::class.java)
 
     fun getWeatherDetails(lat: Double, lon: Double, callback: Callback<WeatherDTO>) {
