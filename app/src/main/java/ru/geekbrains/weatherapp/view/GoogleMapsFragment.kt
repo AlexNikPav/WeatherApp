@@ -196,7 +196,6 @@ class GoogleMapsFragment : Fragment() {
             googleMap.isMyLocationEnabled = isPermissionGranted
             googleMap.uiSettings.isMyLocationButtonEnabled = isPermissionGranted
         }
-        //Получить разрешение, если его нет
     }
 
     companion object {
