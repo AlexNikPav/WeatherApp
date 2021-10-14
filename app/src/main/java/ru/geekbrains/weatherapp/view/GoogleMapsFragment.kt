@@ -5,21 +5,23 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_maps.*
 import ru.geekbrains.weatherapp.R
+import ru.geekbrains.weatherapp.models.City
+import ru.geekbrains.weatherapp.models.Weather
 import java.io.IOException
 
 class GoogleMapsFragment : Fragment() {
@@ -54,6 +56,36 @@ class GoogleMapsFragment : Fragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
         initSearchByAddress()
+        initGetWeather()
+    }
+
+    private fun initGetWeather() {
+        buttonCurWeather.setOnClickListener {
+            val point = map.cameraPosition?.target
+            point?.let { location ->
+                val geoCoder = Geocoder(context)
+                Thread {
+                    try {
+                        val addresses = geoCoder.getFromLocation(
+                            location.latitude,
+                            location.longitude,
+                            1
+                        )
+                        openDetailsFragment(
+                            Weather(
+                                City(
+                                    addresses[0].getAddressLine(0),
+                                    location.latitude,
+                                    location.longitude
+                                )
+                            )
+                        )
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }.start()
+            }
+        }
     }
 
     private fun getAddressAsync(location: LatLng) {
@@ -137,6 +169,22 @@ class GoogleMapsFragment : Fragment() {
                     15f
                 )
             )
+        }
+    }
+
+    private fun openDetailsFragment(
+        weather: Weather
+    ) {
+        activity?.supportFragmentManager?.apply {
+            beginTransaction()
+                .add(
+                    R.id.container,
+                    DetailsFragment.newInstance(Bundle().apply {
+                        putParcelable(DetailsFragment.BUNDLE_EXTRA, weather)
+                    })
+                )
+                .addToBackStack("")
+                .commitAllowingStateLoss()
         }
     }
 
